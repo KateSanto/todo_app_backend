@@ -2,34 +2,46 @@ const express = require("express");
 const serverlessHttp = require("serverless-http");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const mysql = require("mysql");
+
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: "get_stuff_done"
+});
+
 app.get("/tasks", function (request, response) {
-  // Do the logic for getting all the tasks from the DB
-  response.status(200).send("Getting all the tasks! Yay!");
+  connection.query("SELECT * FROM task", function(err, data) {
+    if (err) {
+      console.log("Error fetching tasks", err);
+      response.status(500).json({
+        error: err
+      });
+    } else {
+      response.json({
+        tasks: data
+      });
+    }
+  });
+
 });
 
 app.post("/tasks", function (request, response) {
-  // Do the logic for saving the new task in the DB
-  const task = request.body;
-  // { text: "do the dishes", completed: true, date: "2019" }
-  response.status(201).send("Successfully created task: " + task.text);
+ //  WRITE LOGIC FOR POST FOLLOWING GET SECTION + SEARCHING THINGS HERE: https://www.npmjs.com/package/mysql
 });
 
 app.delete("/tasks/:taskId", function (request, response) {
-  // Do the logic for deleting tasks in the DB
-  const taskId = request.params.taskId;
-  response.status(200).send("Deleted task with id " + taskId);
+  // WRITE LOGIC FOR DELETE FOLLOWING GET SECTION + SEARCHING THINGS HERE: https://www.npmjs.com/package/mysql
 });
 
 app.put("/tasks/:taskId", function (request, response) {
-  //Do the logic to update tasks in the DB
-  const taskId = request.params.taskId;
-  const updatedTask = request.body;
-  response.status(200).send("Updated task with id " + taskId);
+  // WRITE LOGIC FOR PUT FOLLOWING GET SECTION + SEARCHING THINGS HERE: https://www.npmjs.com/package/mysql
 });
 
 
