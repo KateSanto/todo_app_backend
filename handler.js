@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
 });
 
 app.get("/tasks", function (request, response) {
-  connection.query("SELECT * FROM task", function(err, data) {
+  connection.query("SELECT * FROM task", function (err, data) {
     if (err) {
       console.log("Error fetching tasks", err);
       response.status(500).json({
@@ -29,15 +29,37 @@ app.get("/tasks", function (request, response) {
       });
     }
   });
-
 });
 
+// reference for these bits of logic: https://www.npmjs.com/package/mysql
 app.post("/tasks", function (request, response) {
- //  WRITE LOGIC FOR POST FOLLOWING GET SECTION + SEARCHING THINGS HERE: https://www.npmjs.com/package/mysql
+  connection.query("INSERT INTO task SET ?", { id: "005", taskDescription: "Refill handsoap", completed: "false", creationDate: "2019-11-27", userId: "2" }, function (err, results, fields) {
+    if (err) {
+      console.log("Error posting tasks", err);
+      response.status(500).json({
+        error: err
+      });
+    } else {
+      response.json({
+        tasks: fields
+      })
+    }
+  })
 });
 
 app.delete("/tasks/:taskId", function (request, response) {
-  // WRITE LOGIC FOR DELETE FOLLOWING GET SECTION + SEARCHING THINGS HERE: https://www.npmjs.com/package/mysql
+connection.query("DELETE FROM task WHERE id = '005'", function(err, result, fields) {
+  if (err) {
+    console.log("Error deleting tasks", err);
+    response.status(500).json({
+      error: err
+    });
+  } else {
+    response.json({
+      tasks: result
+    })
+  }
+})
 });
 
 app.put("/tasks/:taskId", function (request, response) {
