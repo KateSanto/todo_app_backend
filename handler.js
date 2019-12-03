@@ -33,7 +33,7 @@ app.get("/tasks", function (request, response) {
 });
 
 app.post("/tasks", function (request, response) {
-  connection.query("INSERT INTO task SET ?", { id: uuidv4(), taskDescription: "taskDescription", completed: "completed", creationDate: 2019-12-03 }, function (err, results, fields) {
+  connection.query("INSERT INTO task SET ?", { id: uuidv4(), taskDescription: "taskDescription", completed: "completed", creationDate: "2019-12-03" }, function (err, results, fields) {
     if (err) {
       console.log("Error posting tasks", err);
       response.status(500).json({
