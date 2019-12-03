@@ -16,7 +16,7 @@ const connection = mysql.createConnection({
   database: "get_stuff_done"
 });
 
-app.get("/tasks", function (request, response) {
+app.get("/task", function (request, response) {
   connection.query("SELECT * FROM task", function (err, data) {
     if (err) {
       console.log("Error fetching tasks", err);
@@ -32,7 +32,7 @@ app.get("/tasks", function (request, response) {
 });
 
 // reference for these bits of logic: https://www.npmjs.com/package/mysql
-app.post("/tasks", function (request, response) {
+app.post("/task", function (request, response) {
   connection.query("INSERT INTO task SET ?", { taskDescription: "taskDescription", completed: "completed", creationDate: "creationDate" }, function (err, results, fields) {
     if (err) {
       console.log("Error posting tasks", err);
@@ -47,7 +47,7 @@ app.post("/tasks", function (request, response) {
   })
 });
 
-app.delete("/tasks/:id", function (request, response) {
+app.delete("/task/:id", function (request, response) {
 connection.query("DELETE FROM task WHERE id = id", function(err, result, fields) {
   if (err) {
     console.log("Error deleting tasks", err);
@@ -62,7 +62,7 @@ connection.query("DELETE FROM task WHERE id = id", function(err, result, fields)
 })
 });
 
-app.put("/tasks/:id", function (request, response) {
+app.put("/task/:id", function (request, response) {
   connection.query("UPDATE task SET completed = 'true' WHERE id = 'id'", function(err, result, fields) {
     if (err) {
       console.log("Error updating tasks", err);
