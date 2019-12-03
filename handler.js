@@ -33,8 +33,7 @@ app.get("/tasks", function (request, response) {
 });
 
 app.post("/tasks", function (request, response) {
-    connection.query("INSERT INTO task SET ?", { id: uuidv4(), taskDescription: "taskDescription", completed: "completed", creationDate: "creationDate" }, function (err, results, fields) {
-
+  connection.query("INSERT INTO task SET ?", { id: uuidv4(), taskDescription: "taskDescription", completed: "completed", creationDate: 2019-12-03 }, function (err, results, fields) {
     if (err) {
       console.log("Error posting tasks", err);
       response.status(500).json({
@@ -42,29 +41,29 @@ app.post("/tasks", function (request, response) {
       });
     } else {
       response.json({
-        tasks: fields
+        tasks: results
       })
     }
   })
 });
 
 app.delete("/tasks/:id", function (request, response) {
-connection.query("DELETE FROM task WHERE id = id", function(err, result, fields) {
-  if (err) {
-    console.log("Error deleting tasks", err);
-    response.status(500).json({
-      error: err
-    });
-  } else {
-    response.json({
-      tasks: result
-    })
-  }
-})
+  connection.query("DELETE FROM task WHERE id = id", function (err, result, fields) {
+    if (err) {
+      console.log("Error deleting tasks", err);
+      response.status(500).json({
+        error: err
+      });
+    } else {
+      response.json({
+        tasks: result
+      })
+    }
+  })
 });
 
 app.put("/tasks/:id", function (request, response) {
-  connection.query("UPDATE task SET completed = 'true' WHERE id = 'id'", function(err, result, fields) {
+  connection.query("UPDATE task SET completed = 'true' WHERE id = 'id'", function (err, result, fields) {
     if (err) {
       console.log("Error updating tasks", err);
       response.status(500).json({
@@ -76,7 +75,7 @@ app.put("/tasks/:id", function (request, response) {
       })
     }
   })
-  });
+});
 
 
 module.exports.tasks = serverlessHttp(app);
