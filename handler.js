@@ -56,15 +56,16 @@ app.post("/tasks", function (request, response) {
 });
 
 app.delete("/tasks/:id", function (request, response) {
-  connection.query("DELETE FROM task WHERE id = id", function (err, result, fields) {
+  const id = {id: request.body.id};
+  connection.query("DELETE FROM task WHERE id = ?", [id], function (err, result, fields) {
     if (err) {
       console.log("Error deleting tasks", err);
       response.status(500).json({
         error: err
       });
     } else {
-      response.json({
-        tasks: result
+      response.status(201).json({
+        tasks: task
       })
     }
   })
