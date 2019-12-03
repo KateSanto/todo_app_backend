@@ -1,3 +1,4 @@
+const uuidv4 = require('uuid/v4');
 const express = require("express");
 const serverlessHttp = require("serverless-http");
 const cors = require("cors");
@@ -32,7 +33,8 @@ app.get("/tasks", function (request, response) {
 });
 
 app.post("/tasks", function (request, response) {
-  connection.query("INSERT INTO task SET ?", { taskDescription: "taskDescription", completed: "completed", creationDate: "creationDate" }, function (err, results, fields) {
+    connection.query("INSERT INTO task SET ?", { id: uuidv4(), taskDescription: "taskDescription", completed: "completed", creationDate: "creationDate" }, function (err, results, fields) {
+
     if (err) {
       console.log("Error posting tasks", err);
       response.status(500).json({
