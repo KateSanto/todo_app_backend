@@ -33,10 +33,10 @@ app.get("/tasks", function (request, response) {
 });
 
 app.post("/tasks", function (request, response) {
-  const task = { 
-    id: uuidv4(), 
-    taskDescription: request.body.taskDescription, 
-    completed: request.body.completed, 
+  const task = {
+    id: uuidv4(),
+    taskDescription: request.body.taskDescription,
+    completed: request.body.completed,
     creationDate: request.body.creationDate,
     userId: 1
   };
@@ -46,7 +46,7 @@ app.post("/tasks", function (request, response) {
       response.status(500).json({
         error: err
       });
-    } 
+    }
     else {
       response.status(201).json({
         task: task
@@ -56,7 +56,7 @@ app.post("/tasks", function (request, response) {
 });
 
 app.delete("/tasks/:id", function (request, response) {
-  const id = {id: request.body.id};
+  const id = request.params.id;
   connection.query("DELETE FROM task WHERE id = ?", [id], function (err, result, fields) {
     if (err) {
       console.log("Error deleting tasks", err);
@@ -64,9 +64,7 @@ app.delete("/tasks/:id", function (request, response) {
         error: err
       });
     } else {
-      response.status(201).json({
-        tasks: task
-      })
+      response.status(200).console.log("Task deleted")
     }
   })
 });
