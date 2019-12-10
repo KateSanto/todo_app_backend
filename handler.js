@@ -63,24 +63,26 @@ app.delete("/tasks/:id", function (request, response) {
       response.status(500).json({
         error: err
       });
-    } else {
-      response.status(200).console.log("Task deleted")
+    } 
+    else {
+      response.status(200).json({message: "Task deleted" });
     }
   })
 });
 
+
 app.put("/tasks/:id", function (request, response) {
-  connection.query("UPDATE task SET completed = 'true' WHERE id = 'id'", function (err, result, fields) {
+  const id = request.params.id;
+  connection.query("UPDATE task SET completed = '1' WHERE id = ?", [id], function (err, result, fields) {
     if (err) {
       console.log("Error updating tasks", err);
       response.status(500).json({
         error: err
       });
     } else {
-      response.json({
-        tasks: result
-      })
-    }
+      response.status(200).json({message: "Task updated" });
+      }
+    
   })
 });
 
