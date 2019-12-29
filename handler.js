@@ -71,6 +71,7 @@ app.delete("/tasks/:id", function (request, response) {
 });
 
 
+
 app.put("/tasks/:id", function (request, response) {
   const id = request.params.id;
   connection.query("UPDATE task SET completed = '1' WHERE id = ?", [id], function (err, result, fields) {
