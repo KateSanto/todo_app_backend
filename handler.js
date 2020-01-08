@@ -91,8 +91,7 @@ app.delete("/tasks/:id", function (request, response) {
 app.put("/tasks/:id", function (request, response) {
   const id = request.params.id;
   const completed = request.query.completed;
-  console.log("hello there");
-  connection.query("UPDATE task SET completed = '?' WHERE id = ?", [completed, id], function (err, result, fields) {
+  connection.query("UPDATE task SET completed = ? WHERE id = ?", [completed, id], function (err, result, fields) {
     if (err) {
       console.log("Error updating tasks", err);
       response.status(500).json({
